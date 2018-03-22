@@ -1,6 +1,6 @@
-import {Chat} from './chat'
+import {Message} from './message'
 
-export const CHATS: Chat[] = [
+export const MESSAGES: Message[] = [
   {id: 1, channelId: 11, message: 'hello'},
   {id: 2, channelId: 11, message: 'who are you'},
   {id: 3, channelId: 11, message: 'i am john'},

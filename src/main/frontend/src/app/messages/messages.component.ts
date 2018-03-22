@@ -22,6 +22,7 @@ export class ChatsComponent implements OnInit {
 
   @Input()
   set channel(channel: Channel) {
+    console.log(this.channel);
     this._channel = channel;
     if (!this._channel) {
       return;
