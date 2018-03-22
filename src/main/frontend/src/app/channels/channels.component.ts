@@ -10,8 +10,6 @@ import {ChannelService} from "../channel.service";
 export class ChannelsComponent implements OnInit {
   channels: Channel[];
 
-  selectedChannel: Channel;
-
   constructor(private channelService: ChannelService) {
   }
 
@@ -22,9 +20,5 @@ export class ChannelsComponent implements OnInit {
   getChannels(): void {
     this.channelService.findChannels()
       .subscribe(channels => this.channels = channels);
-  }
-
-  onSelect(channel: Channel): void {
-    this.selectedChannel = channel;
   }
 }

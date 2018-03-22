@@ -1,15 +1,14 @@
-<div *ngIf="channel">
-  <div><span>id: </span>{{channel.id}}</div>
-  <div><span>name: </span>{{channel.name}}</div>
-</div>
-<ul class="chats">
-  <li *ngFor="let chat of chats">
-    <span class="badge">{{chat.id}}</span> {{chat.message}}
-  </li>
-</ul>
-<div>
-  <input #message placeholder="message"/>
-  <button (click)="add(message.value); message.value=''">
-    post
-  </button>
+<div *ngIf="channelId">
+  <div><span>id: </span>{{channelId}}</div>
+  <ul class="messages">
+    <li *ngFor="let message of messages">
+      <span class="badge">{{message.id}}</span> {{message.message}}
+    </li>
+  </ul>
+  <div>
+    <input #message placeholder="message"/>
+    <button (click)="add(message.value); message.value=''">
+      post
+    </button>
+  </div>
 </div>

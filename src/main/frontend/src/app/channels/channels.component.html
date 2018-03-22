@@ -1,8 +1,7 @@
 <ul class="channels">
-  <li *ngFor="let channel of channels"
-      [class.selected]="channel === selectedChannel"
-      (click)="onSelect(channel)">
-    <span class="badge">{{channel.id}}</span> {{channel.name}}
+  <li *ngFor="let channel of channels">
+    <a routerLink="/messages/{{channel.id}}">
+      <span class="badge">{{channel.id}}</span> {{channel.name}}
+    </a>
   </li>
 </ul>
-<app-chats [channel]="selectedChannel"></app-chats>

@@ -1,21 +1,21 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {of} from "rxjs/observable/of";
-import {CHATS} from "./mock-chats";
-import {Chat} from "./chat";
+import {MESSAGES} from "./mock-messages";
+import {Message} from "./message";
 
 @Injectable()
-export class ChatService {
+export class MessageService {
 
   constructor() {
   }
 
-  findChats(channelId: number): Observable<Chat[]> {
-    return of(CHATS.filter(c => c.channelId === channelId));
+  findMessages(channelId: number): Observable<Message[]> {
+    return of(MESSAGES.filter(c => c.channelId === channelId));
   }
 
-  postChat(chat: Chat): Observable<Chat> {
-    CHATS.push(chat);
-    return of(chat);
+  postMessage(message: Message): Observable<Message> {
+    MESSAGES.push(message);
+    return of(message);
   }
 }

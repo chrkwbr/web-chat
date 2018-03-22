@@ -1,37 +1,38 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Channel} from '../channel';
-import {Chat} from "../chat";
-import {ChatService} from "../chat.service";
+import {Component, OnInit} from '@angular/core';
+import {Message} from "../message";
+import {MessageService} from "../message.service";
+import {ActivatedRoute} from "@angular/router";
+import {Location} from '@angular/common';
 
 @Component({
-  selector: 'app-chats',
-  templateUrl: './chats.component.html',
-  styleUrls: ['./chats.component.css']
+  selector: 'app-messages',
+  templateUrl: './messages.component.html',
+  styleUrls: ['./messages.component.css']
 })
-export class ChatsComponent implements OnInit {
-  chats: Chat[];
+export class MessagesComponent implements OnInit {
+  messages: Message[];
+  channelId: number;
 
-  constructor(private chatService: ChatService) {
+  constructor(private route: ActivatedRoute,
+              private location: Location,
+              private messageService: MessageService) {
   }
 
-  private _channel: Channel;
-
-  get channel(): Channel {
-    return this._channel;
+  ngOnInit(): void {
+    this.route.url.subscribe(_ => {
+      this.channelId = +this.route.snapshot.params.id;
+      if (!this.channelId) {
+        return;
+      }
+      this.getMessages();
+    });
   }
 
-  @Input()
-  set channel(channel: Channel) {
-    console.log(this.channel);
-    this._channel = channel;
-    if (!this._channel) {
-      return;
-    }
-    this.chatService.findChats(this._channel.id)
-      .subscribe(chats => this.chats = chats);
-  }
-
-  ngOnInit() {
+  getMessages() {
+    this.messageService.findMessages(this.channelId)
+      .subscribe(messages => {
+        this.messages = messages
+      });
   }
 
   add(message: string): void {
@@ -39,13 +40,15 @@ export class ChatsComponent implements OnInit {
     if (!message) {
       return;
     }
-    this.chatService.postChat({
-      id: this.chats.length,
-      channelId: this._channel.id,
+    this.messageService.postMessage({
+      id: this.messages.length + 1,
+      channelId: this.channelId,
       message: message
-    } as Chat).subscribe(_ => {
-      this.chatService.findChats(this._channel.id)
-        .subscribe(chats => this.chats = chats);
+    } as Message).subscribe(_ => {
+      this.messageService.findMessages(this.channelId)
+        .subscribe(messages => {
+          this.messages = messages
+        });
     });
   }
 }
